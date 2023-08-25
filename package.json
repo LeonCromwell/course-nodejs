@@ -2,9 +2,9 @@
   "name": "blog",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "start": "nodemon --inspect index.js",
+    "start": "nodemon --inspect src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -21,8 +21,10 @@
     "url": "https://github.com/LeonCromwell/blog-nodejs/issues"
   },
   "homepage": "https://github.com/LeonCromwell/blog-nodejs#readme",
+  "type": "module",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "express-handlebars": "^7.1.2"
   },
   "devDependencies": {
     "morgan": "^1.10.0",
