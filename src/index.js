@@ -3,6 +3,7 @@ import morgan from "morgan"
 import express from "express"
 import path from "path"
 import { fileURLToPath } from 'url';
+import {route} from './routes/index.js'
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -21,6 +22,10 @@ app.use(express.json())
 //http logger
 app.use(morgan("combined"));
 
+
+
+
+
 // template engine
 app.engine("hbs", engine({
   extname: "hbs"
@@ -29,22 +34,11 @@ app.set("view engine", "hbs");
 app.set("views",  path.join(__dirname, "resources/views"));
 
 
-//basic routing
-app.get("/", (req, res) => {
-  res.render("home");
-});
 
-app.get("/news", (req, res) => {
-  res.render("news");
-});
 
-app.get("/search", (req, res) => {
-  res.render("search");
-});
-app.post("/search", (req, res) => {
-  console.log(req.body);
- res.send("")
-});
+
+route(app);
+
 
 
 
