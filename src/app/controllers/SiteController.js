@@ -1,15 +1,16 @@
-
-
-import { Course } from "../models/Course.js"
-
+import { Course } from '../models/Course.js';
+import mongoose from '../../../util/mongoose.js';
 
 class SiteController {
-    async home(req, res) {
+    async home(req, res, next) {
         try {
             const courses = await Course.find({}).exec();
-            res.json(courses);
+
+            res.render('home', {
+                courses: mongoose.multibleMongooseToObject(courses),
+            });
         } catch (error) {
-            res.status(500).json({ error: 'Internal server error' });
+            next(error);
         }
     }
 
