@@ -25,17 +25,16 @@
     "type": "module",
     "lint-staged": {
         "src/**/*.{js,scss}": "prettier --write"
-      },
-      "husky": {
+    },
+    "husky": {
         "hook": {
             "pre-commit": "lint-staged"
         }
-      },
-
-
+    },
     "dependencies": {
         "express": "^4.18.2",
-        "express-handlebars": "^7.1.2"
+        "express-handlebars": "^7.1.2",
+        "mongoose": "^7.4.5"
     },
     "devDependencies": {
         "husky": "^8.0.3",

@@ -4,6 +4,12 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { route } from './routes/index.js';
+import * as db from './config/db/index.js'
+
+
+
+//connect to db
+db.connect()
 
 const __filename = fileURLToPath(import.meta.url);
 
