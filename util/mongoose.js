@@ -4,7 +4,7 @@ const mongoose = {
     },
 
     mongooseToObject: (mongoose) => {
-        return mongoose ? mongoose.toObject : mongoose;
+        return mongoose ? mongoose.toObject() : mongoose;
     },
 };
 
