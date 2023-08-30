@@ -3,3 +3,17 @@
 h1 {
     color: $red;
 }
+
+
+.card-desc{
+    height: 50px;
+    overflow-y: hidden;
+    overflow-wrap: break-word;
+}
+
+.avatar-container {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    margin-right:5px ;
+}
