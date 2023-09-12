@@ -17,6 +17,7 @@ class SiteController {
         .then(courses => {res.render('home', {
             courses: mongoose.multibleMongooseToObject(courses)
         })})
+        .catch(next)
     }
 
     search(req, res) {

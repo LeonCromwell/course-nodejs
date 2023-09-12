@@ -22,8 +22,9 @@ class CourseController {
     }
 
     //[GET] ./courses/create
-    async create(req, res, next) {
+     create(req, res, next) {
         res.render('courses/create');
+        
     }
 
     //[GET] ./courses/store
@@ -39,6 +40,14 @@ class CourseController {
             next(error);
         }
     }
+
+    //[PUT] ./courses/:id
+    update(req, res, next) {
+        Course.updateOne({ _id: req.params.id }, req.body )
+            .then(() => res.redirect('/me/stored/courses'))
+            .catch(next)
+    }
+
 }
 
 export default new CourseController();
