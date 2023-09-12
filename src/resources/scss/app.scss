@@ -1,9 +1,24 @@
 @import 'variable';
 
-h1 {
-    color: $red;
+body {
+
+    h1 {
+        color: $red;
+    }
+
+   div {
+    a {
+        text-decoration: none;
+    }
+   }
 }
 
+
+.header-logo{
+    width: 5rem;
+    height: auto;
+    object-fit: cover;
+}
 
 .card-desc{
     height: 50px;
