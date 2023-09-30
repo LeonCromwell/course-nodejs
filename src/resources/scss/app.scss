@@ -12,12 +12,25 @@ body {
     }
    }
 }
+.app{
+    display: flex;
+    flex-direction: column;
+
+
+}
 
 
 .header-logo{
     width: 5rem;
     height: auto;
     object-fit: cover;
+}
+.card-title{
+    height: 50px;
+    white-space: normal;    /* Allow text to wrap to the next line */
+    overflow: hidden;       /* Hide content that overflows the height */
+    text-overflow: ellipsis; /* Show an ellipsis for overflow text */
+   
 }
 
 .card-desc{
@@ -31,4 +44,12 @@ body {
     height: 28px;
     border-radius: 50%;
     margin-right:5px ;
+}
+
+.stored-courses-icon{
+    display: flex;
+    width: 50px;
+    justify-content: space-between;
+    align-items: center;
+
 }

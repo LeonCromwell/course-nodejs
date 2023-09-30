@@ -1,5 +1,12 @@
 <div class='mt-4'>
-    <h3>Khóa học của tôi</h3>
+    <div>
+        <h3>Khóa học của tôi</h3>
+        <div class='stored-courses-icon'>
+            <a href='/me/trash/courses' style='color: black;'> <i class='fa-solid fa-trash'></i> {{numTrash}}</a>
+            <a href='/courses/create' style='color: black;'><i class='fa-solid fa-plus'></i></a>
+        </div>
+
+    </div>
     <table class='table mt-4'>
         <thead>
             <tr>
@@ -25,18 +32,23 @@
                             class='btn btn-link'
                             data-bs-toggle='modal'
                             data-bs-target='#delete-course-modal'
-                            data-id="{{this._id}}"
+                            data-id='{{this._id}}'
                         >Xóa</button>
                     </td>
 
                 </tr>
-
+            {{else}}
+                <tr>
+                    <td colspan='5'>
+                        <p class='text-center'>Bạn chưa có khóa học nào. <a href='/courses/create'>Đăng Khóa Học</a></p>
+                    </td>
+                </tr>
             {{/each}}
         </tbody>
     </table>
 </div>
 
-{{! Confirm delete course }}
+{{! Confirm delete course modal }}
 <div class='modal fade' id='delete-course-modal' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>
     <div class='modal-dialog'>
         <div class='modal-content'>
@@ -49,33 +61,35 @@
             </div>
             <div class='modal-footer'>
                 <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Đóng</button>
-                <button id="btn-delete" class='btn btn-danger'>Xóa bỏ</button>
+                <button id='btn-delete' class='btn btn-danger'>Xóa bỏ</button>
             </div>
         </div>
     </div>
 </div>
 
-<form name="delete-course-form" method="POST"></form>
+<form name='delete-course-form' method='POST'></form>
 
+{{! prettier-ignore }}
 <script>
+  
     var id;
-    const dataId = document.getElementById('delete-course-modal')
-    const btnDelete = document.getElementById('btn-delete')
-    const deleteForm = document.forms['delete-course-form']
+   
 
+    const dataId = document.getElementById('delete-course-modal');
+    const btnDelete = document.getElementById('btn-delete');
+    const deleteForm = document.forms['delete-course-form'];
         if (dataId) {
         dataId.addEventListener('show.bs.modal', event => {
-        // Button that triggered the modal
-        const button = event.relatedTarget
-        // Extract info from data-bs-* attributes
-        id = button.getAttribute('data-id')
-        // If necessary, you could initiate an Ajax request here
-        // and then do the updating in a callback.
+      
+        const button = event.relatedTarget;
+       
+        id = button.getAttribute('data-id');
+       
         })
 
         btnDelete.onclick = () => {
             deleteForm.action = `/courses/${id}?_method=DELETE`
             deleteForm.submit();
-        }
+        };
 }
 </script>

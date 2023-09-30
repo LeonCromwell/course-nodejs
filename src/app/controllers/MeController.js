@@ -4,11 +4,16 @@ import mongoose from '../../../util/mongoose.js';
 class MeController {
     //[GET] ./me/stored/courses
     storedCourses(req, res, next) {
-        Course.find({})
-            .then((courses) => {
-                res.render('me/storedCourses', {
-                    storedCourses: mongoose.multibleMongooseToObject(courses),
-                });
+        Course.countDeleted({ deletedAt: { $ne: null } })
+            .then((numTrash) => {
+                Course.find({})
+                    .then((courses) => {
+                        res.render('me/storedCourses', {
+                            numTrash,
+                            storedCourses: mongoose.multibleMongooseToObject(courses),
+                        });
+                    })
+                    .catch(next);
             })
             .catch(next);
     }
@@ -23,9 +28,16 @@ class MeController {
             })
             .catch(next);
     }
-
-   
-    
+    //[GET] ./me/trash/courses
+    trashCourses(req, res, next) {
+        Course.findDeleted({ deletedAt: { $ne: null } })
+            .then((courses) => {
+                res.render('me/trashCourses', {
+                    trashCourses: mongoose.multibleMongooseToObject(courses),
+                });
+            })
+            .catch(next);
+    }
 }
 
 export default new MeController();

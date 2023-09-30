@@ -1,10 +1,12 @@
 import mongoose from 'mongoose';
 import slug from 'mongoose-slug-generator';
+import mongooseDelete from 'mongoose-delete';
 
-mongoose.plugin(slug);
+// Define Schema
 const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
 
+// Create Schema
 const courseSchema = new Schema(
     {
         id: ObjectId,
@@ -20,4 +22,12 @@ const courseSchema = new Schema(
     },
 );
 
+// Add plugin
+mongoose.plugin(slug);
+courseSchema.plugin(mongooseDelete, {
+    deletedAt: true,
+    overrideMethods: 'all',
+});
+
+// Custom query helpers
 export const Course = mongoose.model('Course', courseSchema);

@@ -1,8 +1,16 @@
-<div class='mt-4'>
+<div class='container py-4 py-xl-5'>
+    <div class='row mb-5'>
+        <div class='col-md-8 col-xl-6 text-center mx-auto'>
+            <h2>Khóa Học</h2>
+            <p class='w-lg-50'>Curae hendrerit donec commodo hendrerit egestas tempus, turpis facilisis nostra nunc.
+                Vestibulum dui eget ultrices.</p>
+        </div>
+    </div>
     <div class='row'>
+
         {{#each courses}}
-            <div class='col-sm-6 col-lg-4 '>
-                <div class='card' style='width: 18rem;'>
+            <div class='col-sm-6 col-lg-3 mt-4'>
+                <div class='card' style='width: 18rem; height: 22rem'>
                     <a href='/courses/{{this.slug}}'>
                         <img src={{this.image}} class='card-img-top' alt='...' />
                     </a>
@@ -11,7 +19,60 @@
                             <h5 class='card-title'>{{this.name}}</h5>
                         </a>
                         <p class='card-text card-desc'>{{this.description}}</p>
-                        {{!-- <a href='#' class='btn btn-primary'>Go somewhere</a> --}}
+                        <a href='#'>Learn More <svg
+                                class='bi bi-arrow-right'
+                                xmlns='http://www.w3.org/2000/svg'
+                                width='1em'
+                                height='1em'
+                                fill='currentColor'
+                                viewBox='0 0 16 16'
+                            >
+                                <path
+                                    fill-rule='evenodd'
+                                    d='M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z'
+                                ></path>
+                            </svg></a>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</div>
+
+<div class='container py-4 py-xl-5'>
+    <div class='row mb-5'>
+        <div class='col-md-8 col-xl-6 text-center mx-auto'>
+            <h2>Bài viết</h2>
+            <p class='w-lg-50'>Curae hendrerit donec commodo hendrerit egestas tempus, turpis facilisis nostra nunc.
+                Vestibulum dui eget ultrices.</p>
+        </div>
+    </div>
+    <div class='row'>
+
+        {{#each courses}}
+            <div class='col-sm-6 col-lg-3 mt-4'>
+                <div class='card' style='width: 18rem; height: 22rem'>
+                    <a href='/courses/{{this.slug}}'>
+                        <img src={{this.image}} class='card-img-top' alt='...' />
+                    </a>
+                    <div class='card-body'>
+                        <a href='/courses/{{this.slug}}'>
+                            <h5 class='card-title'>{{this.name}}</h5>
+                        </a>
+                        <p class='card-text card-desc'>{{this.description}}</p>
+                        <a href='#'>Learn More <svg
+                                class='bi bi-arrow-right'
+                                xmlns='http://www.w3.org/2000/svg'
+                                width='1em'
+                                height='1em'
+                                fill='currentColor'
+                                viewBox='0 0 16 16'
+                            >
+                                <path
+                                    fill-rule='evenodd'
+                                    d='M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z'
+                                ></path>
+                            </svg></a>
                     </div>
                 </div>
             </div>

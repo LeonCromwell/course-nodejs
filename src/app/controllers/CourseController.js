@@ -3,28 +3,19 @@ import mongoose from '../../../util/mongoose.js';
 
 class CourseController {
     //[GET] ./courses/:slug
-   show(req, res, next) {
-        // try {
-        //     const resultTest = await Course.findOne({ slug: req.params.slug }).exec();
-
-        //     res.render('courses/show', {
-        //         courseDetail: mongoose.mongooseToObject(resultTest),
-        //     });
-        // } catch (error) {
-        //     next(error);
-        // }
-
+    show(req, res, next) {
         Course.findOne({ slug: req.params.slug })
-        .then(course => res.render('courses/show', {
-            courseDetail: mongoose.mongooseToObject(course),
-        }))
-        .catch(next)
+            .then((course) =>
+                res.render('courses/show', {
+                    courseDetail: mongoose.mongooseToObject(course),
+                }),
+            )
+            .catch(next);
     }
 
     //[GET] ./courses/create
-     create(req, res, next) {
+    create(req, res, next) {
         res.render('courses/create');
-        
     }
 
     //[GET] ./courses/store
@@ -43,18 +34,31 @@ class CourseController {
 
     //[PUT] ./courses/:id
     update(req, res, next) {
-        Course.updateOne({ _id: req.params.id }, req.body )
+        Course.updateOne({ _id: req.params.id }, req.body)
             .then(() => res.redirect('/me/stored/courses'))
-            .catch(next)
+            .catch(next);
     }
 
     //[DELETE] ./courses/:id
     destroy(req, res, next) {
-        Course.deleteOne( {_id: req.params.id} )
+        Course.delete({ _id: req.params.id })
             .then(() => res.redirect('back'))
             .catch(next);
     }
 
+    //[DELETE] ./courses/:id/force
+    forceDestroy(req, res, next) {
+        Course.deleteOne({ _id: req.params.id })
+            .then(() => res.redirect('back'))
+            .catch(next);
+    }
+
+    // [PATCH] ./courses/:id/restore
+    restore(req, res, next) {
+        Course.restore({ _id: req.params.id })
+            .then(() => res.redirect('back'))
+            .catch(next);
+    }
 }
 
 export default new CourseController();
