@@ -2,18 +2,36 @@
     <div>
         <h3>Khóa học của tôi</h3>
         <div class='stored-courses-icon'>
-            <a href='/me/trash/courses' style='color: black;'> <i class='fa-solid fa-trash'></i> {{numTrash}}</a>
-            <a href='/courses/create' style='color: black;'><i class='fa-solid fa-plus'></i></a>
+            <a href='/me/trash/courses' style='color: black;'>
+                <i class='fa-solid fa-trash'></i>
+                <span class='num-trash'>{{numTrash}}</span></a>
+            <a href='/courses/create' style='color: black;'><i class='fa-solid fa-plus'></i><span>Thêm khóa học</span></a>
         </div>
+        <div class='mt-4 sellect-all-form'>
+            <div class='form-check'>
+                <input class='form-check-input' type='checkbox' value='checkAll' id='checkAll' />
+                <label class='form-check-label' for='checkAll'>
+                    Chọn tất cả
+                </label>
+            </div>
 
+            <select class='form-select form-control-sm checkbox-select-all-option' aria-label='Default select example'>
+                <option>-- Option --</option>
+                <option value='DELETE'>Xóa</option>
+
+            </select>
+
+            <button class='btn btn-primary btn-action'>Action</button>
+        </div>
     </div>
     <table class='table mt-4'>
         <thead>
             <tr>
+                <th scope='col'></th>
                 <th scope='col'>#</th>
-                <th scope='col'>Tên khóa học</th>
+                <th scope='col' width='45%'>Tên khóa học</th>
                 <th scope='col'>Trình độ</th>
-                <th scope='col' colspan='2'>Thời gian tạo</th>
+                <th scope='col' colspan='3'>Thời gian tạo</th>
 
             </tr>
         </thead>
@@ -21,6 +39,9 @@
         <tbody>
             {{#each storedCourses}}
                 <tr>
+                    <td>
+                        <input class='form-check-input' type='checkbox' name='coursesId' value='{{this._id}}' />
+                    </td>
                     <th scope='row'>{{sum @index 1}}</th>
                     <td>{{this.name}}</td>
                     <td>{{this.level}}</td>
@@ -92,4 +113,65 @@
             deleteForm.submit();
         };
 }
+</script>
+
+{{! prettier-ignore }}
+<script>
+    var checkAll = document.getElementById('checkAll'); 
+    var checkboxSelectAllOption = document.querySelector('.checkbox-select-all-option'); 
+    var btnAction = document.querySelector('.btn-action');
+    var checkboxs = document.querySelectorAll('input[name="coursesId"]');
+
+    
+  
+    
+    checkAll.onclick = () => {
+        if (checkAll.checked) {
+            checkboxs.forEach(checkbox => {
+                checkbox.checked = true;
+            })
+        } else {
+            checkboxs.forEach(checkbox => {
+                checkbox.checked = false;
+            })
+        }
+    }
+
+
+    btnAction.onclick = () => {
+            var checkboxSelectAllOptionValue = checkboxSelectAllOption.value; 
+            if(checkboxSelectAllOptionValue === 'DELETE') {
+                var coursesId = [];
+                checkboxs.forEach(checkbox => {
+                    if(checkbox.checked) {
+                        coursesId.push(checkbox.value);
+                    }
+                })
+
+
+                //Xóa nhiều khóa học
+                if(coursesId.length > 0) {
+                    
+                 coursesId.forEach(id => {
+                    fetch(`/courses/${id}?_method=DELETE`, {
+                    method: 'POST'
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                console.log(`Course ${id} deleted successfully`);
+                            } else {
+                                console.error(`Failed to delete course ${id}`);
+                            }
+                            })
+                         .then(() => {
+                            location.reload();
+                            })
+                        .catch(error => {
+                            console.error(`Error deleting course ${id}: ${error}`);
+                        }); 
+                });
+                }
+            }
+        }
+
 </script>

@@ -48,8 +48,32 @@ body {
 
 .stored-courses-icon{
     display: flex;
-    width: 50px;
+    // width: 0px;
     justify-content: space-between;
     align-items: center;
 
+    a{
+        text-decoration: none;
+        color: #000;
+        
+        span{
+            margin-left: 10px;
+        }
+    }
+
+   
 }
+
+.sellect-all-form{
+    // width: 500px;
+    display: flex;
+    // justify-content: space-between;
+    gap: 20px;
+    align-items: center;
+
+    .checkbox-select-all-option{
+        width: 200px;
+    }
+}
+
+
