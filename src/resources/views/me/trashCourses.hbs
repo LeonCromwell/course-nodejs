@@ -2,7 +2,28 @@
     <div>
         <h3>Khóa học đã xóa</h3>
         <a href='/me/stored/courses'>Khóa học của tôi</a>
+        <div class='mt-4 sellect-all-form'>
+            <div class='form-check'>
+                <input class='form-check-input' type='checkbox' value='checkAll' id='checkAll' />
+                <label class='form-check-label' for='checkAll'>
+                    Chọn tất cả
+                </label>
+            </div>
 
+            <select class='form-select form-control-sm checkbox-select-all-option' aria-label='Default select example'>
+                <option>-- Option --</option>
+                <option value='DELETE'>Xóa</option>
+                <option value='PATCH'>Khôi phục</option>
+
+            </select>
+
+            <button
+                class='btn btn-primary btn-action'
+                data-bs-toggle='modal'
+                data-bs-target='#restore-many-courses-modal'
+            >Action</button>
+
+        </div>
     </div>
     <table class='table mt-4'>
         <thead>
@@ -10,7 +31,7 @@
                 <th scope='col'>#</th>
                 <th scope='col'>Tên khóa học</th>
                 <th scope='col'>Thời gian tạo</th>
-                <th scope='col' colspan='2'>Thời gian xóa</th>
+                <th scope='col' colspan='3'>Thời gian xóa</th>
 
             </tr>
         </thead>
@@ -18,12 +39,15 @@
         <tbody>
             {{#each trashCourses}}
                 <tr>
+                    <td>
+                        <input class='form-check-input' type='checkbox' name='coursesId' value='{{this._id}}' />
+                    </td>
                     <th scope='row'>{{sum @index 1}}</th>
                     <td>{{this.name}}</td>
                     <td>{{this.createdAt}}</td>
                     <td>{{this.deletedAt}}</td>
                     <td width='250px'>
-                        <a href='' class='btn btn-link btn-delete'>Xóa vĩnh viễn</a>
+                        <button class='btn btn-link btn-delete'>Xóa vĩnh viễn</button>
                         <button
                             type='button'
                             class='btn btn-link'
@@ -65,6 +89,31 @@
     </div>
 </div>
 
+<!-- Confirm restore many modal -->
+<div
+    class='modal fade'
+    id='restore-many-courses-modal'
+    tabindex='-1'
+    aria-labelledby='exampleModalLabel'
+    aria-hidden='true'
+>
+    <div class='modal-dialog'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+                <h5 class='modal-title'>Khôi phục khóa học</h5>
+                <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+            </div>
+            <div class='modal-body'>
+                Bạn có chắc chắn muốn khôi phục các khóa học này ?
+            </div>
+            <div class='modal-footer'>
+                <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Đóng</button>
+                <button id='btn-restore-many' type='button' class='btn btn-primary'>Khôi phục</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <form name='restore-course-form' method='POST'></form>
 <form name='delete-course-form' method='POST'></form>
 {{! prettier-ignore }}
@@ -74,7 +123,9 @@
     var deleteCourseForm = document.forms['delete-course-form'];
     var btnRestore = document.getElementById('btn-restore');
     var dataId = document.getElementById('restore-course-modal');
-    var deleteBtn = document.querySelectorAll('.btn-delete');
+    var btnDelete = document.querySelectorAll('.btn-delete');
+
+
 
     if(dataId) {
         dataId.addEventListener('show.bs.modal', function(event) {
@@ -93,4 +144,60 @@
 
     
 
+</script>
+
+{{! prettier-ignore }}
+<script>
+        const restoreManyCoursesModal = document.getElementById('restore-many-courses-modal');
+        const checkboxSelectAll = document.getElementById('checkAll');
+        const checkboxSelectAllOption = document.querySelector('.checkbox-select-all-option');
+        const btnAction = document.querySelector('.btn-action');
+        const checkBox = document.querySelectorAll('input[name="coursesId"]')
+        const btnRestoreMany = document.getElementById('btn-restore-many');
+        var checkboxSelectAllOptionValue;
+        var coursesId = [];
+
+        checkboxSelectAll.onclick = function() {
+            if (checkboxSelectAll.checked) {
+                checkBox.forEach((checkbox) => {
+                    checkbox.checked = true;
+                })
+            } else {
+                checkBox.forEach((checkbox) => {
+                    checkbox.checked = false;
+                })
+            }
+        }
+
+
+        btnAction.onclick = function() {
+             checkboxSelectAllOptionValue = checkboxSelectAllOption.value; 
+
+            checkBox.forEach((checkbox) => {
+                if (checkbox.checked) {
+                    coursesId.push(checkbox.value);
+                }
+            })
+
+ 
+        }
+        if(restoreManyCoursesModal){
+            restoreManyCoursesModal.addEventListener('show.bs.modal', event => {
+                btnRestoreMany.onclick = function() {
+                    if(checkboxSelectAllOptionValue === 'PATCH'){
+                        coursesId.forEach((courseId) => {
+                            fetch(`/courses/${courseId}/restore?_method=PATCH`, {
+                                method: 'POST',
+                            })
+                            .then(res => {
+                                if(res.ok) {
+                                    window.location.reload();
+                                }
+                            })
+                            .catch(error => console.log(error))
+                        })
+                    }
+                }
+            })
+        }
 </script>

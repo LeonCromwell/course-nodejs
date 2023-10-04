@@ -21,7 +21,12 @@
 
             </select>
 
-            <button class='btn btn-primary btn-action'>Action</button>
+            <button
+                class='btn btn-primary btn-action'
+                data-bs-toggle='modal'
+                data-bs-target='#delete-many-courses-modal'
+            >Action</button>
+
         </div>
     </div>
     <table class='table mt-4'>
@@ -90,6 +95,31 @@
 
 <form name='delete-course-form' method='POST'></form>
 
+<!-- Confirm delete many modal -->
+<div
+    class='modal fade'
+    id='delete-many-courses-modal'
+    tabindex='-1'
+    aria-labelledby='exampleModalLabel'
+    aria-hidden='true'
+>
+    <div class='modal-dialog'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+                <h5 class='modal-title'>Xóa khóa học</h5>
+                <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+            </div>
+            <div class='modal-body'>
+                Bạn có chắc chắn muốn xóa các khóa học này ?
+            </div>
+            <div class='modal-footer'>
+                <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Đóng</button>
+                <button id='btn-delete-many' type='button' class='btn btn-danger'>Xóa Bỏ</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 {{! prettier-ignore }}
 <script>
   
@@ -117,10 +147,15 @@
 
 {{! prettier-ignore }}
 <script>
+    //modal
+    var deleteManyCoursesModal = document.getElementById('delete-many-courses-modal');
+    var btnDeleteMany = document.getElementById('btn-delete-many');
+
     var checkAll = document.getElementById('checkAll'); 
     var checkboxSelectAllOption = document.querySelector('.checkbox-select-all-option'); 
     var btnAction = document.querySelector('.btn-action');
     var checkboxs = document.querySelectorAll('input[name="coursesId"]');
+    var coursesId = [];
 
     
   
@@ -138,18 +173,30 @@
     }
 
 
+    
+
     btnAction.onclick = () => {
             var checkboxSelectAllOptionValue = checkboxSelectAllOption.value; 
             if(checkboxSelectAllOptionValue === 'DELETE') {
-                var coursesId = [];
+              
+
+                //check all
                 checkboxs.forEach(checkbox => {
                     if(checkbox.checked) {
                         coursesId.push(checkbox.value);
                     }
                 })
 
+           
+                
+            }
+        }
 
-                //Xóa nhiều khóa học
+        if(deleteManyCoursesModal){
+        deleteManyCoursesModal.addEventListener("show.bs.modal", event => {
+            btnDeleteMany.onclick = () => {
+                
+                 //Xóa nhiều khóa học
                 if(coursesId.length > 0) {
                     
                  coursesId.forEach(id => {
@@ -171,7 +218,10 @@
                         }); 
                 });
                 }
-            }
-        }
 
+            }
+        })
+    }
+
+       
 </script>
