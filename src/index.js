@@ -6,14 +6,10 @@ import { fileURLToPath } from 'url';
 import methodOverride from 'method-override';
 
 import { route } from './routes/index.js';
-import * as db from './config/db/index.js'
-
-
+import * as db from './config/db/index.js';
 
 //connect to db
-db.connect()
-
-
+db.connect();
 
 const __filename = fileURLToPath(import.meta.url);
 
@@ -30,9 +26,7 @@ app.use(
 );
 app.use(express.json());
 
-app.use(
-    methodOverride('_method')
-)
+app.use(methodOverride('_method'));
 
 //http logger
 app.use(morgan('combined'));
@@ -43,12 +37,13 @@ app.engine(
     engine({
         extname: 'hbs',
         helpers: {
-            sum : (a,b) => a + b,
-        }
+            sum: (a, b) => a + b,
+            eq: (a, b) => a == b,
+        },
     }),
 );
 app.set('view engine', 'hbs');
-app.set('views', path.join(__dirname, 'resources','views'));
+app.set('views', path.join(__dirname, 'resources', 'views'));
 
 route(app);
 

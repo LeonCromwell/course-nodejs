@@ -26,7 +26,7 @@ const courseSchema = new Schema(
 mongoose.plugin(slug);
 courseSchema.plugin(mongooseDelete, {
     deletedAt: true,
-    overrideMethods: 'all',
+    overrideMethods: ['find', 'findOne', 'finDeleted', 'count', 'countDeleted'],
 });
 
 // Custom query helpers

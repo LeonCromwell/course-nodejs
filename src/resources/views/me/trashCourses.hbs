@@ -20,7 +20,7 @@
             <button
                 class='btn btn-primary btn-action'
                 data-bs-toggle='modal'
-                data-bs-target='#restore-many-courses-modal'
+                data-bs-target='#delete-many-courses-modal'
             >Action</button>
 
         </div>
@@ -28,6 +28,7 @@
     <table class='table mt-4'>
         <thead>
             <tr>
+                <th></th>
                 <th scope='col'>#</th>
                 <th scope='col'>Tên khóa học</th>
                 <th scope='col'>Thời gian tạo</th>
@@ -47,7 +48,7 @@
                     <td>{{this.createdAt}}</td>
                     <td>{{this.deletedAt}}</td>
                     <td width='250px'>
-                        <button class='btn btn-link btn-delete'>Xóa vĩnh viễn</button>
+                        {{! <button class='btn btn-link btn-delete'>Xóa vĩnh viễn</button> }}
                         <button
                             type='button'
                             class='btn btn-link'
@@ -114,6 +115,31 @@
     </div>
 </div>
 
+{{! Delete many courses modal }}
+<div
+    class='modal fade'
+    id='delete-many-courses-modal'
+    tabindex='-1'
+    aria-labelledby='exampleModalLabel'
+    aria-hidden='true'
+>
+    <div class='modal-dialog'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+                <h5 class='modal-title'>Xóa khóa học</h5>
+                <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+            </div>
+            <div class='modal-body'>
+                Bạn có chắc chắn muốn xóa vĩnh viễn các khóa học này ?
+            </div>
+            <div class='modal-footer'>
+                <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Đóng</button>
+                <button id='btn-delete-many' type='button' class='btn btn-primary'>Xóa</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <form name='restore-course-form' method='POST'></form>
 <form name='delete-course-form' method='POST'></form>
 {{! prettier-ignore }}
@@ -148,15 +174,27 @@
 
 {{! prettier-ignore }}
 <script>
+        //modal
         const restoreManyCoursesModal = document.getElementById('restore-many-courses-modal');
+        const deleteManyCoursesModal = document.getElementById('delete-many-courses-modal');
+
+        //checkbox
         const checkboxSelectAll = document.getElementById('checkAll');
-        const checkboxSelectAllOption = document.querySelector('.checkbox-select-all-option');
-        const btnAction = document.querySelector('.btn-action');
         const checkBox = document.querySelectorAll('input[name="coursesId"]')
-        const btnRestoreMany = document.getElementById('btn-restore-many');
+        //option
+        const checkboxSelectAllOption = document.querySelector('.checkbox-select-all-option');
         var checkboxSelectAllOptionValue;
+        //button
+        const btnAction = document.querySelector('.btn-action');
+        const btnRestoreMany = document.getElementById('btn-restore-many');
+        const btnDeleteMany = document.getElementById('btn-delete-many');
+
+        //target modal
+        const targetElement = document.querySelector("button[data-bs-target='#delete-many-courses-modal']");
+        //list courses id
         var coursesId = [];
 
+        //event when click checkbox select all
         checkboxSelectAll.onclick = function() {
             if (checkboxSelectAll.checked) {
                 checkBox.forEach((checkbox) => {
@@ -169,10 +207,20 @@
             }
         }
 
-
-        btnAction.onclick = function() {
+        //update value of attribute data-bs-target when change option
+        checkboxSelectAllOption.onclick = function() {
              checkboxSelectAllOptionValue = checkboxSelectAllOption.value; 
+            if(checkboxSelectAllOptionValue == 'DELETE'){
+                targetElement.setAttribute('data-bs-target', '#delete-many-courses-modal');
+            }else if (checkboxSelectAllOptionValue == 'PATCH'){
+                targetElement.setAttribute('data-bs-target', '#restore-many-courses-modal');
+            }
+        }
 
+        //event when click button action
+        btnAction.onclick = function() {
+         
+            //get list courses id
             checkBox.forEach((checkbox) => {
                 if (checkbox.checked) {
                     coursesId.push(checkbox.value);
@@ -181,6 +229,8 @@
 
  
         }
+
+        //event when option = restore 
         if(restoreManyCoursesModal){
             restoreManyCoursesModal.addEventListener('show.bs.modal', event => {
                 btnRestoreMany.onclick = function() {
@@ -198,6 +248,33 @@
                         })
                     }
                 }
+            })
+        }
+
+
+        //event when option = delete
+        if(deleteManyCoursesModal){
+            deleteManyCoursesModal.addEventListener('show.bs.modal', event => {
+                    btnDeleteMany.onclick = function() {
+                        console.log(checkboxSelectAllOptionValue);
+                        console.log(coursesId);
+                        if(checkboxSelectAllOptionValue === 'DELETE'){
+                            coursesId.forEach((courseId) => {
+                            console.log(courseId);
+                            fetch(`/courses/${courseId}/remove?_method=DELETE`, {
+                                method: 'POST',
+                            })
+                            .then(res => {
+                                if(res.ok) {
+                                    window.location.reload();
+                                }
+                            })
+                            .catch(error => console.log(error))
+                            })
+                        }else{
+                            console.log('error');
+                        }
+                    }
             })
         }
 </script>
