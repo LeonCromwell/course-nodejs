@@ -4,10 +4,12 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import methodOverride from 'method-override';
+import dotenv from 'dotenv';
 
 import { route } from './routes/index.js';
 import * as db from './config/db/index.js';
 
+dotenv.config();
 //connect to db
 db.connect();
 
