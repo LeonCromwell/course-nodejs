@@ -3,6 +3,9 @@
     "version": "1.0.0",
     "description": "",
     "main": "src/index.js",
+    "engines": {
+        "node": "18.x"
+    },
     "scripts": {
         "start": "nodemon --inspect src/index.js",
         "watch": "node-sass -w  src/resources/scss -o src/public/css",

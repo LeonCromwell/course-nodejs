@@ -4,6 +4,9 @@
             <h2>Khóa Học</h2>
             <p class='w-lg-50'>Curae hendrerit donec commodo hendrerit egestas tempus, turpis facilisis nostra nunc.
                 Vestibulum dui eget ultrices.</p>
+            <a href='/courses/create' style='color: black;'><i class='fa-solid fa-plus'></i><span
+                    style='margin-left: 10px'
+                >Thêm khóa học</span></a>
         </div>
     </div>
     <div class='row'>
@@ -19,7 +22,7 @@
                             <h5 class='card-title'>{{this.name}}</h5>
                         </a>
                         <p class='card-text card-desc'>{{this.description}}</p>
-                        <a href='#'>Learn More <svg
+                        <a href='/courses/{{this.slug}}'>Learn More <svg
                                 class='bi bi-arrow-right'
                                 xmlns='http://www.w3.org/2000/svg'
                                 width='1em'
@@ -45,6 +48,9 @@
             <h2>Bài viết</h2>
             <p class='w-lg-50'>Curae hendrerit donec commodo hendrerit egestas tempus, turpis facilisis nostra nunc.
                 Vestibulum dui eget ultrices.</p>
+            <a href='/courses/create' style='color: black;'><i class='fa-solid fa-plus'></i><span
+                    style='margin-left: 10px'
+                >Thêm bài viết</span></a>
         </div>
     </div>
     <div class='row'>
