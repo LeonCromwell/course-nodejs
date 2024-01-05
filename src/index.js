@@ -8,6 +8,7 @@ import dotenv from 'dotenv';
 
 import { route } from './routes/index.js';
 import * as db from './config/db/index.js';
+import { env } from 'process';
 
 dotenv.config();
 //connect to db
@@ -49,6 +50,12 @@ app.set('views', path.join(__dirname, 'resources', 'views'));
 
 route(app);
 
-app.listen(port, () => {
-    console.log(`App listening on port ${port}`);
-});
+if (env.NODE_ENV === 'production') {
+    app.listen(process.env.PORT, () => {
+        console.log(`Production App listening on port ${process.env.PORT}`);
+    });
+} else {
+    app.listen(port, () => {
+        console.log(`App listening on port ${port}`);
+    });
+}
