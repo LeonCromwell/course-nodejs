@@ -1,0 +1,29 @@
+<div class='d-flex justify-content-center'>
+    <form class='w-25' method='POST'>
+        <div class='mb-3'>
+            <label for='username' class='form-label'>Username</label>
+            <input type='text' class='form-control' id='username' name='username' placeholder='Nhập username' />
+        </div>
+        <div class='mb-3'>
+            <label for='inputPassword' class='col-sm-2 col-form-label'>Password</label>
+            <div class='col'>
+                <input
+                    type='password'
+                    class='form-control'
+                    id='inputPassword'
+                    placeholder='Nhập Password'
+                    name='password'
+                />
+            </div>
+            {{#if error.password}}
+                <div class='col'>
+                    <p class='text-danger'>{{error.password}}</p>
+                </div>
+            {{/if}}
+        </div>
+        <input type='submit' class='btn btn-primary' name='btnLogin' value='Đăng nhập' />
+    </form>
+</div>
+<div class='d-flex justify-content-center mt-3'>
+    <p>Bạn chưa có tài khoản? <a href='register'>Đăng ký</a></p>
+</div>

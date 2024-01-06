@@ -9,11 +9,13 @@ import dotenv from 'dotenv';
 import { route } from './routes/index.js';
 import * as db from './config/db/index.js';
 import { env } from 'process';
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 //connect to db
 db.connect();
 
+// const cookieParser = require('cookie-parser');
 const __filename = fileURLToPath(import.meta.url);
 
 const __dirname = path.dirname(__filename);
@@ -21,6 +23,7 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const port = 3000;
 
+app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(
     express.urlencoded({

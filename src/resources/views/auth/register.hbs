@@ -1,0 +1,52 @@
+<div class='d-flex justify-content-center'>
+    <form class='w-25' method='POST'>
+        <div class='mb-3'>
+            <label for='username' class='form-label'>Username</label>
+            <input type='text' class='form-control' id='username' name='username' placeholder='Nhập username' />
+            {{#if error.username}}
+                <div class='col'>
+                    <p class='text-danger'>{{error.username}}</p>
+                </div>
+            {{/if}}
+        </div>
+        <div class='mb-3'>
+            <label for='fullname' class='form-label'>Họ và tên</label>
+            <input type='text' class='form-control' id='username' name='fullname' placeholder='Nhập họ và tên' />
+        </div>
+        <div class='mb-3'>
+            <label for='inputPassword' class='col-sm-2 col-form-label'>Password</label>
+            <div class='col'>
+                <input
+                    type='password'
+                    class='form-control'
+                    id='inputPassword'
+                    placeholder='Nhập Password'
+                    name='password'
+                />
+            </div>
+            {{#if error.password}}
+                <div class='col'>
+                    <p class='text-danger'>{{error.password}}</p>
+                </div>
+            {{/if}}
+        </div>
+        <div class='mb-3'>
+            <label for='inputPassword' class='col-form-label'>Confirm Password</label>
+            <div class='col'>
+                <input
+                    type='password'
+                    class='form-control'
+                    id='inputPassword'
+                    placeholder='Nhập lại Password'
+                    name='confirm_password'
+                />
+            </div>
+            {{#if error.password}}
+                <div class='col'>
+                    <p class='text-danger'>{{error.password}}</p>
+                </div>
+            {{/if}}
+        </div>
+        <input type='submit' class='btn btn-primary' value='Đăng ký' />
+    </form>
+</div>
