@@ -8,39 +8,53 @@
             />
         </a>
 
-        <div id='navbarSupportedContent'>
-            <ul class='navbar-nav ml-auto'>
+        {{#if account}}
+            <div id='navbarSupportedContent'>
+                <ul class='navbar-nav ml-auto'>
 
-                <li class='nav-item dropdown'>
+                    <li class='nav-item dropdown'>
 
-                    <a
-                        class='nav-link dropdown-toggle'
-                        href='#'
-                        role='button'
-                        data-bs-toggle='dropdown'
-                        aria-expanded='false'
-                    >
-                        <img
-                            src='https://motgame.vn/stores/news_dataimages/motgamevn/062023/30/05/hina-nu-cosplayer-noi-tieng-han-quoc-khien-bao-nguoi-me-met-nhan-lam-vo-la-ai-53-.5548.jpg'
-                            class='avatar-container'
-                            alt='Mai Lý Hải'
-                        />
-                        Mai Lý Hải
-                    </a>
-                    <ul class='dropdown-menu'>
-                        <li>
-                            <a class='dropdown-item' href='/courses/create'>Thêm Khóa Học</a></li>
-                        <li><hr class='dropdown-divider' /></li>
-                        <li><a class='dropdown-item' href='/me/stored/courses'>Khóa học của tôi</a></li>
-                        <li><hr class='dropdown-divider' /></li>
-                        <li><a class='dropdown-item' href='/me/stored/news'>Bài viết của tôi</a></li>
-                        <li><hr class='dropdown-divider' /></li>
-                        <li><a class='dropdown-item' href='#'>Đăng xuất</a></li>
-                    </ul>
-                </li>
+                        <a
+                            class='nav-link dropdown-toggle'
+                            href='#'
+                            role='button'
+                            data-bs-toggle='dropdown'
+                            aria-expanded='false'
+                        >
+                            <img
+                                src='https://motgame.vn/stores/news_dataimages/motgamevn/062023/30/05/hina-nu-cosplayer-noi-tieng-han-quoc-khien-bao-nguoi-me-met-nhan-lam-vo-la-ai-53-.5548.jpg'
+                                class='avatar-container'
+                                alt='Mai Lý Hải'
+                            />
+                            {{account}}
+                        </a>
+                        <ul class='dropdown-menu'>
+                            <li>
+                                <a class='dropdown-item' href='/courses/create'>Thêm Khóa Học</a></li>
+                            <li><hr class='dropdown-divider' /></li>
+                            <li><a class='dropdown-item' href='/me/stored/courses'>Khóa học của tôi</a></li>
+                            <li><hr class='dropdown-divider' /></li>
+                            <li><a class='dropdown-item' href='/me/stored/news'>Bài viết của tôi</a></li>
+                            <li><hr class='dropdown-divider' /></li>
+                            <li><a class='dropdown-item' href='#'>Đăng xuất</a></li>
+                        </ul>
+                    </li>
 
-            </ul>
+                </ul>
 
-        </div>
+            </div>
+        {{else}}
+            <div id='navbarSupportedContent'>
+                <ul class='navbar-nav ml-auto'>
+                    <li class='nav-item'>
+                        <a class='nav-link' href='/login'>Đăng nhập</a>
+                    </li>
+                    <li class='nav-item'>
+                        <a class='nav-link' href='/register'>Đăng ký</a>
+                    </li>
+                </ul>
+            </div>
+        {{/if}}
+
     </div>
 </nav>
